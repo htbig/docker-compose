@@ -1,0 +1,40 @@
+version: '2'
+services:
+   telegraf:
+      image: "telegraf"
+      ports:
+        - "8092:8092/udp"
+        - "8125:8125/udp"
+        - "8094:8094"
+      volumes:
+        - /sys:/rootfs/sys:ro
+        - /proc:/rootfs/proc:ro
+        - /var/run:/var/run:rw
+        - /var/run/docker.sock:/var/run/docker.sock:ro
+        - /home/heting/monitor-compose/root/etc/telegraf:/etc/telegraf
+        - /:/rootfs:ro
+      environment:
+        - 'HOST_PROC=/rootfs/proc'
+        - 'HOST_SYS=/rootfs/sys'
+      privileged: true
+   influxdb:
+      image: "influxdb"
+      ports:
+        - "8086:8086"
+      volumes:
+        - /home/heting/monitor-compose/root/etc/influxdb:/etc/influxdb
+        - /home/heting/monitor-compose/root/var/lib/influxdb:/var/lib/influxdb
+   kapacitor:
+      image: "kapacitor"
+      ports:
+        - "9092:9092"
+      volumes:
+        - /home/heting/monitor-compose/root/etc/kapacitor:/etc/kapacitor
+        - /home/heting/monitor-compose/root:/root
+        - /home/heting/monitor-compose/root/var/lib/kapacitor:/var/lib/kapacitor
+      environment:
+        HOSTNAME: "172.21.78.50"
+   chronograf:
+      image: "chronograf"
+      ports:
+        - "8888:8888"
