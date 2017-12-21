@@ -1,6 +1,6 @@
 #!/bin/bash
 curl --request POST \
-  --url http://m.vegcloud.tech:669/wechatNotify/message/ \
+  --url http://xxxxx:669/wechatNotify/message/ \
   --header 'authorization: Basic YWRtaW46Y2poeXkzMDA=' \
   --header 'cache-control: no-cache' \
   --header 'content-type: application/json' \
